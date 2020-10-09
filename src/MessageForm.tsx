@@ -13,12 +13,13 @@ const Button = styled.button`
   width: 100px;
 `;
 
-export default function MessageForm() {
+export default function MessageForm(props: any) {
   let textInput: any = null;
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
     console.log(textInput.value);
+    props.onSubmit(textInput.value);
     textInput.value = '';
   };
 
