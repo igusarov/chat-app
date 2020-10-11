@@ -1,5 +1,4 @@
 import React, { useLayoutEffect } from 'react';
-import styled from 'styled-components';
 import SendMessageForm from './components/SendMessageForm';
 import MessageList from './components/MessageList';
 import { useDispatch } from 'react-redux';
@@ -10,7 +9,7 @@ import * as SocketIO from 'socket.io';
 
 declare const socket: SocketIO.Socket;
 
-export default function App() {
+const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
@@ -51,4 +50,6 @@ export default function App() {
       </Footer>
     </Container>
   );
-}
+};
+
+export default App;

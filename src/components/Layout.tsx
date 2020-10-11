@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 
 const PageWrap = styled.div`
   height: 100%;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC, SyntheticEvent } from 'react';
 import styled from 'styled-components';
 
 const Form = styled.form`
@@ -13,10 +13,14 @@ const Button = styled.button`
   width: 100px;
 `;
 
-export default function SendMessageForm(props: any) {
-  let textInput: any = null;
+type ComponentProps = {
+  onSubmit: (text: string) => void;
+};
 
-  const handleSubmit = (event: any) => {
+const SendMessageForm: FC<ComponentProps> = (props) => {
+  let textInput: HTMLTextAreaElement = null;
+
+  const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
     console.log(textInput.value);
     props.onSubmit(textInput.value);
@@ -33,4 +37,6 @@ export default function SendMessageForm(props: any) {
       <Button type="submit">Send</Button>
     </Form>
   );
-}
+};
+
+export default SendMessageForm;

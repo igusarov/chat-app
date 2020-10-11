@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { AppState } from '../store';
@@ -29,7 +29,7 @@ const MessageBlock = styled.div<ComponentProps>`
   margin-bottom: 10px;
 `;
 
-export default function MessageList() {
+const MessageList: FC = () => {
   const items = useSelector<AppState, Message[]>(
     (state) => state.messages as Message[]
   );
@@ -43,4 +43,6 @@ export default function MessageList() {
       ))}
     </List>
   );
-}
+};
+
+export default MessageList;
