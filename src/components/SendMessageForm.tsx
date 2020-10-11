@@ -13,7 +13,7 @@ const Button = styled.button`
   width: 100px;
 `;
 
-export default function MessageForm(props: any) {
+export default function SendMessageForm(props: any) {
   let textInput: any = null;
 
   const handleSubmit = (event: any) => {

@@ -1,7 +1,10 @@
-import React, { useLayoutEffect, useRef, useState} from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import MessageForm from './MessageForm';
-import MessageList from './MessageList';
+import SendMessageForm from './components/SendMessageForm';
+import MessageList from './components/MessageList';
+import { useDispatch } from 'react-redux';
+import { addMessage } from './store/messages/actions';
+import { MessageType } from './store/messages/types';
 
 declare const socket: any;
 
@@ -47,9 +50,7 @@ const Footer = styled.div`
 `;
 
 export default function App() {
-  const [messages, setMessages] = useState([]);
-  const massagesStateRef = useRef<any>();
-  massagesStateRef.current = messages;
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     socket.on('connect', () => {
@@ -58,32 +59,31 @@ export default function App() {
     });
   }, []);
 
-  let ids = 0;
-
   const handleNewMessage = ({ text }: { text: string }) => {
-    setMessages([
-      ...massagesStateRef.current,
-      {
-        id: ids++,
-        isUserOwn: true,
-        text,
-      },
-    ]);
+    dispatch(
+      addMessage({
+        userName: 'ilya',
+        type: MessageType.TEXT,
+        dateTime: '23422342',
+        data: text,
+      })
+    );
   };
 
   const handleSubmit = (text: string) => {
     socket.emit('message', { text });
   };
+
   return (
     <PageWrap>
       <AppWrap>
         <AppContainer>
           <Header>header</Header>
           <Content>
-            <MessageList items={messages} />
+            <MessageList />
           </Content>
           <Footer>
-            <MessageForm onSubmit={handleSubmit} />
+            <SendMessageForm onSubmit={handleSubmit} />
           </Footer>
         </AppContainer>
       </AppWrap>
