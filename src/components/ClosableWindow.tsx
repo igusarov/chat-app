@@ -25,7 +25,7 @@ const CloseButton = styled.img`
 const ClosableWindow: FC<ComponentProps> = ({ onClose, children }) => {
   return (
     <Container>
-      <CloseButton src={CloseIcon} />
+      <CloseButton onClick={onClose} src={CloseIcon} />
       {children}
     </Container>
   );

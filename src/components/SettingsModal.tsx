@@ -1,41 +1,120 @@
-import React, { FC } from 'react';
+import React, { FC, SyntheticEvent } from 'react';
 import ClosableWindow from './ClosableWindow';
 import { Modal } from './Modal';
 import Button from './Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from '../store';
+import * as settingsActions from '../store/settings/actions';
+import {
+  ClockDisplayType,
+  Settings as SettingsType,
+} from '../store/settings/types';
+import { defaultSettings } from '../store/settings/reducer';
 
 const Settings: FC = () => {
+  let formRef: HTMLFormElement = null;
+
+  const dispatch = useDispatch();
+
+  const isElevenHoursDisplaySelected = useSelector<AppState, boolean>(
+    (state) => state.settings.clockDisplay === ClockDisplayType.ELEVEN_HOURS
+  );
+
+  const isSendByCtrlKeySelected = useSelector<AppState, boolean>(
+    (state) => state.settings.sendByCtrlEnterKey
+  );
+
+  const getSettings = (): SettingsType => {
+    const formData = new FormData(formRef);
+    return {
+      clockDisplay: formData.get('clock-display') as ClockDisplayType,
+      sendByCtrlEnterKey: formData.get('ctrl-enter-keys') === 'true',
+    };
+  };
+
+  const handleFormChange = () => {
+    dispatch(settingsActions.setSettings(getSettings()));
+  };
+
+  const handleResetToDefault = (event: SyntheticEvent) => {
+    event.preventDefault();
+    const { sendByCtrlEnterKey, clockDisplay } = defaultSettings;
+    dispatch(
+      settingsActions.setSettings({
+        sendByCtrlEnterKey,
+        clockDisplay,
+      })
+    );
+  };
+
   return (
-    <form>
+    <form ref={(element) => (formRef = element)} onChange={handleFormChange}>
       <div>
         <p>Clock Display</p>
         <label htmlFor="12-hours">12 hours</label>
-        <input type="radio" id="12-hours" name="clock-display" />
+        <input
+          type="radio"
+          id="12-hours"
+          name="clock-display"
+          value={ClockDisplayType.ELEVEN_HOURS}
+          readOnly
+          checked={isElevenHoursDisplaySelected}
+        />
         <label htmlFor="24-hours">24 hours</label>
-        <input type="radio" id="24-hours" name="clock-display" />
+        <input
+          type="radio"
+          id="24-hours"
+          name="clock-display"
+          value={ClockDisplayType.TWENTY_FOUR_HOURS}
+          readOnly
+          checked={!isElevenHoursDisplaySelected}
+        />
       </div>
       <div>
         <p>Send message on Ctrl/Cmd + Enter</p>
         <label htmlFor="on">On</label>
-        <input type="radio" id="on" name="ctrl-enter-keys" />
+        <input
+          type="radio"
+          id="on"
+          value="true"
+          name="ctrl-enter-keys"
+          readOnly
+          checked={isSendByCtrlKeySelected}
+        />
         <label htmlFor="off">Off</label>
-        <input type="radio" id="off" name="ctrl-enter-keys" />
+        <input
+          type="radio"
+          id="off"
+          value="false"
+          name="ctrl-enter-keys"
+          readOnly
+          checked={!isSendByCtrlKeySelected}
+        />
       </div>
-      <Button>Reset to default</Button>
+      <Button onClick={handleResetToDefault}>Reset to default</Button>
     </form>
   );
 };
 
 const SettingsModal: FC = () => {
+  const dispatch = useDispatch();
+
+  const isShown = useSelector<AppState, boolean>(
+    (state) => state.settings.isShown
+  );
+
   return (
-    <Modal>
-      <ClosableWindow
-        onClose={() => {
-          console.log('close');
-        }}
-      >
-        <Settings />
-      </ClosableWindow>
-    </Modal>
+    isShown && (
+      <Modal>
+        <ClosableWindow
+          onClose={() => {
+            dispatch(settingsActions.setIsShown(false));
+          }}
+        >
+          <Settings />
+        </ClosableWindow>
+      </Modal>
+    )
   );
 };
 

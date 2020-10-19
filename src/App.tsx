@@ -7,6 +7,7 @@ import { MessageType } from './store/messages/types';
 import { Container, Content, Footer, Header } from './components/Layout';
 import io from 'socket.io-client';
 import SettingsModal from './components/SettingsModal';
+import NavBar from './components/NavBar';
 
 const socket = io('http://localhost:3000');
 
@@ -42,7 +43,9 @@ const App: React.FC = () => {
 
   return (
     <Container>
-      <Header>header</Header>
+      <Header>
+        <NavBar />
+      </Header>
       <Content>
         <MessageList />
       </Content>
