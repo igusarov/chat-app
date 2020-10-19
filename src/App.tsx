@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import { addMessage } from './store/messages/actions';
 import { MessageType } from './store/messages/types';
 import { Container, Content, Footer, Header } from './components/Layout';
-import * as SocketIO from 'socket.io';
+import io from 'socket.io-client';
 
-declare const socket: SocketIO.Socket;
+const socket = io('http://localhost:3000');
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
