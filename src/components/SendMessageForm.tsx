@@ -1,5 +1,6 @@
 import React, { FC, SyntheticEvent } from 'react';
 import styled from 'styled-components';
+import Button from './Button';
 
 const Form = styled.form`
   display: flex;
@@ -9,7 +10,8 @@ const TextField = styled.textarea`
   flex-grow: 1;
   margin-right: 5px;
 `;
-const Button = styled.button`
+
+const SendButton = styled(Button)`
   width: 100px;
 `;
 
@@ -34,7 +36,7 @@ const SendMessageForm: FC<ComponentProps> = (props) => {
           textInput = input;
         }}
       />
-      <Button type="submit">Send</Button>
+      <SendButton type="submit">Send</SendButton>
     </Form>
   );
 };

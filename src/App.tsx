@@ -6,6 +6,7 @@ import { addMessage } from './store/messages/actions';
 import { MessageType } from './store/messages/types';
 import { Container, Content, Footer, Header } from './components/Layout';
 import io from 'socket.io-client';
+import SettingsModal from './components/SettingsModal';
 
 const socket = io('http://localhost:3000');
 
@@ -48,6 +49,7 @@ const App: React.FC = () => {
       <Footer>
         <SendMessageForm onSubmit={handleSubmit} />
       </Footer>
+      <SettingsModal />
     </Container>
   );
 };
