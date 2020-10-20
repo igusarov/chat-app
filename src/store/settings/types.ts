@@ -1,5 +1,5 @@
 export enum ClockDisplayType {
-  ELEVEN_HOURS = 'ELEVEN_HOURS',
+  TWELVE_HOURS = 'TWELVE_HOURS',
   TWENTY_FOUR_HOURS = 'TWENTY_FOUR_HOURS',
 }
 

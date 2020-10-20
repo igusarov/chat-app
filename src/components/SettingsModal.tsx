@@ -17,7 +17,7 @@ const Settings: FC = () => {
   const dispatch = useDispatch();
 
   const isElevenHoursDisplaySelected = useSelector<AppState, boolean>(
-    (state) => state.settings.clockDisplay === ClockDisplayType.ELEVEN_HOURS
+    (state) => state.settings.clockDisplay === ClockDisplayType.TWELVE_HOURS
   );
 
   const isSendByCtrlKeySelected = useSelector<AppState, boolean>(
@@ -70,7 +70,7 @@ const Settings: FC = () => {
           type="radio"
           id="12-hours"
           name="clock-display"
-          value={ClockDisplayType.ELEVEN_HOURS}
+          value={ClockDisplayType.TWELVE_HOURS}
           readOnly
           checked={isElevenHoursDisplaySelected}
         />

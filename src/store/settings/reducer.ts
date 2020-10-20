@@ -6,7 +6,7 @@ const generateUserName = () => `Guest ${Date.now()}`;
 
 export const defaultSettings: SettingsState = {
   isShown: false,
-  clockDisplay: ClockDisplayType.ELEVEN_HOURS,
+  clockDisplay: ClockDisplayType.TWELVE_HOURS,
   sendByCtrlEnterKey: false,
   userName: generateUserName(),
 };
