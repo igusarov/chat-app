@@ -21,12 +21,14 @@ const getComponentMessages = createSelector<
     return messages.map((item) => ({
       ...item,
       isUserOwn: item.userName === user,
+      isImage: /\.(jpg|jpeg|png|gif)$/i.test(item.text),
     }));
   }
 );
 
 type ComponentMessage = {
   isUserOwn: boolean;
+  isImage: boolean;
 } & Message;
 
 type ComponentProps = {
@@ -47,12 +49,16 @@ const MessageContainer = styled.div<ComponentProps>`
 
 const MessageBlock = styled.div``;
 
-const MessageText = styled.div<ComponentProps>`
+const MessageWrap = styled.div<ComponentProps>`
   background-color: ${({ isUserOwn }) => (isUserOwn ? 'red' : 'green')};
   width: 300px;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
+`;
+
+const MessageImage = styled.img`
+  height: 50px;
 `;
 
 const MessageList: FC = () => {
@@ -64,11 +70,13 @@ const MessageList: FC = () => {
 
   return (
     <List>
-      {items.map(({ isUserOwn, dateTime, text, userName}) => (
+      {items.map(({ isUserOwn, dateTime, text, userName, isImage }) => (
         <MessageContainer isUserOwn={isUserOwn} key={dateTime}>
           <MessageBlock>
             {userName} {dateFormat(dateTime)}
-            <MessageText isUserOwn={isUserOwn}>{text}</MessageText>
+            <MessageWrap isUserOwn={isUserOwn}>
+              {isImage ? <MessageImage src={text} /> : text}
+            </MessageWrap>
           </MessageBlock>
         </MessageContainer>
       ))}
