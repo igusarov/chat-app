@@ -5,6 +5,13 @@ import { AppState } from '../store';
 import { Message } from '../store/messages/types';
 import * as moment from 'moment';
 import { createSelector } from 'reselect';
+import { ClockDisplayType } from '../store/settings/types';
+
+const dateFormat = (date: string, displayType: ClockDisplayType): string => {
+  const template =
+    displayType === ClockDisplayType.TWENTY_FOUR_HOURS ? 'HH:mm' : 'hh:mm A';
+  return moment(date).format(template);
+};
 
 const getUser = (state: AppState): string => state.settings.userName;
 const getMessages = (state: AppState): Message[] => state.messages as Message[];
@@ -63,17 +70,16 @@ const MessageImage = styled.img`
 
 const MessageList: FC = () => {
   const items = useSelector<AppState, ComponentMessage[]>(getComponentMessages);
-
-  const dateFormat = (date: string): string => {
-    return moment(date).format('HH:mm');
-  };
+  const displayType = useSelector<AppState, ClockDisplayType>(
+    (state) => state.settings.clockDisplay
+  );
 
   return (
     <List>
       {items.map(({ isUserOwn, dateTime, text, userName, isImage }) => (
         <MessageContainer isUserOwn={isUserOwn} key={dateTime}>
           <MessageBlock>
-            {userName} {dateFormat(dateTime)}
+            {userName} {dateFormat(dateTime, displayType)}
             <MessageWrap isUserOwn={isUserOwn}>
               {isImage ? <MessageImage src={text} /> : text}
             </MessageWrap>
