@@ -1,6 +1,9 @@
 import React, { FC, SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
+import chatConnection from '../services/chatConnection';
+import { useSelector } from 'react-redux';
+import { AppState } from '../store';
 
 const Form = styled.form`
   display: flex;
@@ -15,17 +18,19 @@ const SendButton = styled(Button)`
   width: 100px;
 `;
 
-type ComponentProps = {
-  onSubmit: (text: string) => void;
-};
-
-const SendMessageForm: FC<ComponentProps> = (props) => {
+const SendMessageForm: FC = () => {
   let textInput: HTMLTextAreaElement = null;
+
+  const userName = useSelector<AppState, string>(
+    (state) => state.settings.userName
+  );
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-    console.log(textInput.value);
-    props.onSubmit(textInput.value);
+    chatConnection.sendMessage({
+      userName,
+      text: textInput.value,
+    });
     textInput.value = '';
   };
 

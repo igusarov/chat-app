@@ -3,6 +3,31 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { AppState } from '../store';
 import { Message } from '../store/messages/types';
+import * as moment from 'moment';
+import { createSelector } from 'reselect';
+
+const getUser = (state: AppState): string => state.settings.userName;
+const getMessages = (state: AppState): Message[] => state.messages as Message[];
+
+const getComponentMessages = createSelector<
+  AppState,
+  string,
+  Message[],
+  ComponentMessage[]
+>(
+  getUser,
+  getMessages,
+  (user: string, messages: Message[]): ComponentMessage[] => {
+    return messages.map((item) => ({
+      ...item,
+      isUserOwn: item.userName === user,
+    }));
+  }
+);
+
+type ComponentMessage = {
+  isUserOwn: boolean;
+} & Message;
 
 type ComponentProps = {
   isUserOwn: boolean;
@@ -16,13 +41,14 @@ const List = styled.div`
 
 const MessageContainer = styled.div<ComponentProps>`
   display: flex;
-  justify-content: ${(props: ComponentProps) =>
-    props.isUserOwn ? 'flex-end' : 'flex-start'};
+  justify-content: ${({ isUserOwn }) =>
+    isUserOwn ? 'flex-end' : 'flex-start'};
 `;
 
-const MessageBlock = styled.div<ComponentProps>`
-  background-color: ${(props: ComponentProps) =>
-    props.isUserOwn ? 'red' : 'green'};
+const MessageBlock = styled.div``;
+
+const MessageText = styled.div<ComponentProps>`
+  background-color: ${({ isUserOwn }) => (isUserOwn ? 'red' : 'green')};
   width: 300px;
   padding: 10px;
   border-radius: 8px;
@@ -30,15 +56,20 @@ const MessageBlock = styled.div<ComponentProps>`
 `;
 
 const MessageList: FC = () => {
-  const items = useSelector<AppState, Message[]>(
-    (state) => state.messages as Message[]
-  );
+  const items = useSelector<AppState, ComponentMessage[]>(getComponentMessages);
+
+  const dateFormat = (date: string): string => {
+    return moment(date).format('HH:mm');
+  };
 
   return (
     <List>
-      {items.map((item) => (
-        <MessageContainer isUserOwn={true} key={item.data}>
-          <MessageBlock isUserOwn={true}>{item.data}</MessageBlock>
+      {items.map(({ isUserOwn, dateTime, text, userName}) => (
+        <MessageContainer isUserOwn={isUserOwn} key={dateTime}>
+          <MessageBlock>
+            {userName} {dateFormat(dateTime)}
+            <MessageText isUserOwn={isUserOwn}>{text}</MessageText>
+          </MessageBlock>
         </MessageContainer>
       ))}
     </List>

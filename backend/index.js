@@ -5,8 +5,10 @@ const io = require('socket.io')(http);
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('message', data => {
-    console.log('hey', data);
-    io.emit('message', data);
+    io.emit('message', {
+      ...data,
+      dateTime: Date.now(),
+    });
   });
 });
 

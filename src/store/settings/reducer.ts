@@ -2,10 +2,13 @@ import { ClockDisplayType, SettingsActionTypes, SettingsState } from './types';
 import { ActionType, createReducer } from 'typesafe-actions';
 import * as SettingsActions from './actions';
 
+const generateUserName = () => `Guest ${Date.now()}`;
+
 export const defaultSettings: SettingsState = {
   isShown: false,
   clockDisplay: ClockDisplayType.ELEVEN_HOURS,
   sendByCtrlEnterKey: false,
+  userName: generateUserName(),
 };
 
 const initialState: SettingsState = defaultSettings;

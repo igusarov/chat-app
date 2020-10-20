@@ -3,42 +3,23 @@ import SendMessageForm from './components/SendMessageForm';
 import MessageList from './components/MessageList';
 import { useDispatch } from 'react-redux';
 import { addMessage } from './store/messages/actions';
-import { MessageType } from './store/messages/types';
+import { Message } from './store/messages/types';
 import { Container, Content, Footer, Header } from './components/Layout';
-import io from 'socket.io-client';
 import SettingsModal from './components/SettingsModal';
 import NavBar from './components/NavBar';
+import chatConnection from './services/chatConnection';
 
-const socket = io('http://localhost:3000');
+const { socket } = chatConnection;
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    if (socket.connected) {
-      handleSocketConnected();
-    } else {
-      socket.on('connect', handleSocketConnected);
-    }
+    socket.on('message', handleNewMessage);
   }, []);
 
-  const handleSocketConnected = () => {
-    socket.on('message', handleNewMessage);
-  };
-
-  const handleNewMessage = ({ text }: { text: string }) => {
-    dispatch(
-      addMessage({
-        userName: 'ilya',
-        type: MessageType.TEXT,
-        dateTime: '23422342',
-        data: text,
-      })
-    );
-  };
-
-  const handleSubmit = (text: string) => {
-    socket.emit('message', { text });
+  const handleNewMessage = (message: Message) => {
+    dispatch(addMessage(message));
   };
 
   return (
@@ -50,7 +31,7 @@ const App: React.FC = () => {
         <MessageList />
       </Content>
       <Footer>
-        <SendMessageForm onSubmit={handleSubmit} />
+        <SendMessageForm />
       </Footer>
       <SettingsModal />
     </Container>

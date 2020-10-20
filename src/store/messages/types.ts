@@ -1,13 +1,7 @@
-export enum MessageType {
-  TEXT = 0,
-  URL = 1,
-}
-
 export type Message = {
   userName: string;
-  type: MessageType;
   dateTime: string;
-  data: string;
+  text: string;
 };
 
 export enum MessagesActionTypes {

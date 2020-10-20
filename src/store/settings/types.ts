@@ -6,6 +6,7 @@ export enum ClockDisplayType {
 export type Settings = {
   clockDisplay: ClockDisplayType;
   sendByCtrlEnterKey: boolean;
+  userName: string;
 };
 
 type Layout = {
