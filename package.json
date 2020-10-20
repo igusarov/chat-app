@@ -4,7 +4,7 @@
   "description": "Chat app",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
+    "start": "webpack-dev-server --mode development --open --hot --host 0.0.0.0",
     "build": "webpack --config webpack.config.js",
     "lint": "eslint ./src/**/*.{ts,tsx}",
     "server:start": "node ./backend/index.js"
