@@ -9,7 +9,7 @@ const PageWrap = styled.div`
 
 const AppWrap = styled.div`
   height: 100%;
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 auto;
 `;
 
