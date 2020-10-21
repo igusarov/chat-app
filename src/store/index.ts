@@ -1,5 +1,6 @@
+import thunkMiddleware from 'redux-thunk';
 import { MessagesState } from './messages/types';
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import messagesReducer from './messages/reducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import settingsReducer from './settings/reducer';
@@ -10,12 +11,14 @@ export type AppState = Readonly<{
   settings: SettingsState;
 }>;
 
+const composedEnhancers = composeWithDevTools(applyMiddleware(thunkMiddleware));
+
 const createRootReducer = () =>
   combineReducers<AppState>({
     messages: messagesReducer,
     settings: settingsReducer,
   });
 
-const store = createStore(createRootReducer(), composeWithDevTools());
+const store = createStore(createRootReducer(), composedEnhancers);
 
 export default store;

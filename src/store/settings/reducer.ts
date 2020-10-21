@@ -21,7 +21,11 @@ const settingsReducer = createReducer<
     ...state,
     isShown: action.payload,
   }))
-  .handleType(SettingsActionTypes.SET_SETTINGS, (state, action) => ({
+  .handleType(SettingsActionTypes.SET_SETTINGS_SUCCESS, (state, action) => ({
+    ...state,
+    ...action.payload,
+  }))
+  .handleType(SettingsActionTypes.GET_SETTINGS_SUCCESS, (state, action) => ({
     ...state,
     ...action.payload,
   }));

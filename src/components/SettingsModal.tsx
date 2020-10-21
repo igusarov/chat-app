@@ -4,6 +4,7 @@ import { Modal } from './Modal';
 import Button from './Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../store';
+import * as settingsAsyncActions from '../store/settings/asyncActions';
 import * as settingsActions from '../store/settings/actions';
 import {
   ClockDisplayType,
@@ -38,14 +39,14 @@ const Settings: FC = () => {
   };
 
   const handleFormChange = () => {
-    dispatch(settingsActions.setSettings(getSettings()));
+    dispatch(settingsAsyncActions.setSettings(getSettings()));
   };
 
   const handleResetToDefault = (event: SyntheticEvent) => {
     event.preventDefault();
     const { sendByCtrlEnterKey, clockDisplay, userName } = defaultSettings;
     dispatch(
-      settingsActions.setSettings({
+      settingsAsyncActions.setSettings({
         sendByCtrlEnterKey,
         clockDisplay,
         userName,

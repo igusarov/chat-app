@@ -34,7 +34,7 @@ const SendMessageForm: FC = () => {
     return () => {
       textInput.current.removeEventListener('keypress', handleKeyPress);
     };
-  }, [isSendByCtrlEnterKeySelected]);
+  }, [isSendByCtrlEnterKeySelected, userName]);
 
   const handleKeyPress = (event: KeyboardEvent) => {
     if (event.code === 'Enter') {

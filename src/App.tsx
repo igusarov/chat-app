@@ -8,6 +8,7 @@ import { Container, Content, Footer, Header } from './components/Layout';
 import SettingsModal from './components/SettingsModal';
 import NavBar from './components/NavBar';
 import chatConnection from './services/chatConnection';
+import { getSettings } from './store/settings/asyncActions';
 
 const { socket } = chatConnection;
 
@@ -15,6 +16,7 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
+    dispatch(getSettings());
     socket.on('message', handleNewMessage);
   }, []);
 

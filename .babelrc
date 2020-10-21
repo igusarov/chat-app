@@ -4,5 +4,8 @@
     "@babel/preset-react",
     "@babel/preset-typescript"
   ],
-  "plugins": ["styled-components"]
+  "plugins": [
+    "styled-components",
+    "@babel/plugin-transform-runtime"
+  ]
 }
