@@ -9,6 +9,8 @@ import SettingsModal from './components/SettingsModal';
 import NavBar from './components/NavBar';
 import chatConnection from './services/chatConnection';
 import { getSettings } from './store/settings/asyncActions';
+import { setIsConnected } from './store/socket/actions';
+import ConnectionStatusModal from './components/ConnectionStatusModal';
 
 const { socket } = chatConnection;
 
@@ -18,10 +20,23 @@ const App: React.FC = () => {
   useLayoutEffect(() => {
     dispatch(getSettings());
     socket.on('message', handleNewMessage);
+    socket.on('connect', handleSocketConnected);
+    socket.on('disconnect', handleSocketDisconnected);
+    if (socket.connected) {
+      handleSocketConnected();
+    }
   }, []);
 
   const handleNewMessage = (message: Message) => {
     dispatch(addMessage(message));
+  };
+
+  const handleSocketConnected = () => {
+    dispatch(setIsConnected(true));
+  };
+
+  const handleSocketDisconnected = () => {
+    dispatch(setIsConnected(false));
   };
 
   return (
@@ -36,6 +51,7 @@ const App: React.FC = () => {
         <SendMessageForm />
       </Footer>
       <SettingsModal />
+      <ConnectionStatusModal />
     </Container>
   );
 };
