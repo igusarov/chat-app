@@ -11,6 +11,43 @@ import {
   Settings as SettingsType,
 } from '../store/settings/types';
 import { defaultSettings } from '../store/settings/reducer';
+import styled from 'styled-components';
+import {
+  borderColor,
+  borderRadius,
+  borderWidth,
+  padding,
+} from '../css-variables';
+
+const Form = styled.form`
+  padding: ${padding};
+`;
+
+const Label = styled.label`
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 5px;
+`;
+
+const Section = styled.div`
+  padding-bottom: 12px;
+`;
+
+const TextInput = styled.input`
+  border-radius: ${borderRadius};
+  border-width: ${borderWidth};
+  border-color: ${borderColor};
+`;
+
+const RadioInput = styled.input`
+  margin-right: 6px;
+`;
+
+const SectionTitle = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 12px;
+`;
 
 const Settings: FC = () => {
   let formRef: HTMLFormElement = null;
@@ -55,19 +92,21 @@ const Settings: FC = () => {
   };
 
   return (
-    <form ref={(element) => (formRef = element)} onChange={handleFormChange}>
-      <div>
-        <label htmlFor="user-name">User name</label>
-        <input
+    <Form ref={(element) => (formRef = element)} onChange={handleFormChange}>
+      <Section>
+        <Label htmlFor="user-name">User name</Label>
+        <TextInput
           type="text"
           id="user-name"
           name="user-name"
           value={userName}
           onChange={handleFormChange}
         />
-        <p>Clock Display</p>
-        <label htmlFor="12-hours">12 hours</label>
-        <input
+      </Section>
+      <Section>
+        <SectionTitle>Clock Display</SectionTitle>
+        <Label htmlFor="12-hours">12 hours</Label>
+        <RadioInput
           type="radio"
           id="12-hours"
           name="clock-display"
@@ -75,8 +114,8 @@ const Settings: FC = () => {
           readOnly
           checked={isElevenHoursDisplaySelected}
         />
-        <label htmlFor="24-hours">24 hours</label>
-        <input
+        <Label htmlFor="24-hours">24 hours</Label>
+        <RadioInput
           type="radio"
           id="24-hours"
           name="clock-display"
@@ -84,11 +123,11 @@ const Settings: FC = () => {
           readOnly
           checked={!isElevenHoursDisplaySelected}
         />
-      </div>
-      <div>
-        <p>Send message on Ctrl/Cmd + Enter</p>
-        <label htmlFor="on">On</label>
-        <input
+      </Section>
+      <Section>
+        <SectionTitle>Send message on Ctrl/Cmd + Enter</SectionTitle>
+        <Label htmlFor="on">On</Label>
+        <RadioInput
           type="radio"
           id="on"
           value="true"
@@ -96,8 +135,8 @@ const Settings: FC = () => {
           readOnly
           checked={isSendByCtrlKeySelected}
         />
-        <label htmlFor="off">Off</label>
-        <input
+        <Label htmlFor="off">Off</Label>
+        <RadioInput
           type="radio"
           id="off"
           value="false"
@@ -105,9 +144,9 @@ const Settings: FC = () => {
           readOnly
           checked={!isSendByCtrlKeySelected}
         />
-      </div>
+      </Section>
       <Button onClick={handleResetToDefault}>Reset to default</Button>
-    </form>
+    </Form>
   );
 };
 

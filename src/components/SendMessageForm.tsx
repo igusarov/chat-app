@@ -4,17 +4,30 @@ import Button from './Button';
 import chatConnection from '../services/chatConnection';
 import { useSelector } from 'react-redux';
 import { AppState } from '../store';
+import {
+  borderColor,
+  borderRadius,
+  borderWidth,
+  padding,
+} from '../css-variables';
 
 const Form = styled.form`
+  align-items: center;
+  height: 100%;
   display: flex;
-  padding: 20px 10px;
+  padding: 0 ${padding};
 `;
 const TextField = styled.textarea`
+  height: 40px;
   flex-grow: 1;
   margin-right: 5px;
+  border-radius: ${borderRadius};
+  border-width: ${borderWidth};
+  border-color: ${borderColor};
 `;
 
 const SendButton = styled(Button)`
+  height: 40px;
   width: 100px;
 `;
 
@@ -42,6 +55,7 @@ const SendMessageForm: FC = () => {
         (isSendByCtrlEnterKeySelected && event.ctrlKey) ||
         (!isSendByCtrlEnterKeySelected && !event.ctrlKey)
       ) {
+        event.preventDefault();
         sendMessage();
       }
     }

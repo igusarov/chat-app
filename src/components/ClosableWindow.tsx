@@ -9,14 +9,14 @@ type ComponentProps = {
 };
 
 const Container = styled.div`
-  padding-top: 20px;
+  padding-top: 30px;
   position: relative;
 `;
 
 const CloseButton = styled.img`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   height: 20px;
   width: 20px;
   cursor: pointer;

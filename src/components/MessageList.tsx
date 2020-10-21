@@ -6,6 +6,7 @@ import { Message } from '../store/messages/types';
 import * as moment from 'moment';
 import { createSelector } from 'reselect';
 import { ClockDisplayType } from '../store/settings/types';
+import { padding } from '../css-variables';
 
 const dateFormat = (date: string, displayType: ClockDisplayType): string => {
   const template =
@@ -46,6 +47,8 @@ const List = styled.div`
   height: 100%;
   flex-direction: row;
   overflow: auto;
+  background-color: #ebecec;
+  padding: ${padding};
 `;
 
 const MessageContainer = styled.div<ComponentProps>`
@@ -54,11 +57,23 @@ const MessageContainer = styled.div<ComponentProps>`
     isUserOwn ? 'flex-end' : 'flex-start'};
 `;
 
-const MessageBlock = styled.div``;
+const MessageBlock = styled.div`
+  flex-basis: 300px;
+`;
+
+const MessageInfo = styled.div<ComponentProps>`
+  color: ${({ isUserOwn }) => (isUserOwn ? 'grey' : '#b74747')};
+  margin-left: 6px;
+  margin-bottom: 3px;
+  font-style: italic;
+  font-size: 12px;
+  font-weight: bold;
+}
+`;
 
 const MessageWrap = styled.div<ComponentProps>`
-  background-color: ${({ isUserOwn }) => (isUserOwn ? 'red' : 'green')};
-  width: 300px;
+  background-color: ${({ isUserOwn }) => (isUserOwn ? '#9fc9e6' : '#ffc3c3')};
+  color: #646464;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -79,7 +94,9 @@ const MessageList: FC = () => {
       {items.map(({ isUserOwn, dateTime, text, userName, isImage }) => (
         <MessageContainer isUserOwn={isUserOwn} key={dateTime}>
           <MessageBlock>
-            {userName} {dateFormat(dateTime, displayType)}
+            <MessageInfo isUserOwn={isUserOwn}>
+              {userName} {dateFormat(dateTime, displayType)}
+            </MessageInfo>
             <MessageWrap isUserOwn={isUserOwn}>
               {isImage ? <MessageImage src={text} /> : text}
             </MessageWrap>

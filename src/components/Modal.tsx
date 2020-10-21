@@ -1,7 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import { modalMaxWidth, primaryColor } from '../css-variables';
 
 const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   height: 100%;
   width: 100%;
@@ -11,12 +15,9 @@ const Container = styled.div`
 
 const Content = styled.div`
   max-height: 300px;
-  max-width: 300px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+  max-width: ${modalMaxWidth};
+  background-color: ${primaryColor};
+  border-radius: 5px;
 `;
 
 export const Modal: FC = ({ children }) => {

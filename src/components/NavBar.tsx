@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import * as settingsActions from '../store/settings/actions';
+import { padding } from '../css-variables';
 
 const Container = styled.div`
   position: relative;
@@ -26,7 +27,7 @@ const SettingsButton = styled.div`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 5px;
+  right: ${padding};
   text-decoration: underline;
   text-decoration-style: dotted;
 `;
@@ -36,7 +37,7 @@ const NavBar: FC = () => {
 
   return (
     <Container>
-      <Title>App name here</Title>
+      <Title>Chat app</Title>
       <SettingsButton
         onClick={() => dispatch(settingsActions.setIsShown(true))}
       >
