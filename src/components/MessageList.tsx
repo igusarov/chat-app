@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { AppState } from '../store';
@@ -84,13 +84,18 @@ const MessageImage = styled.img`
 `;
 
 const MessageList: FC = () => {
+  const listRef = useRef<HTMLDivElement>(null);
   const items = useSelector<AppState, ComponentMessage[]>(getComponentMessages);
   const displayType = useSelector<AppState, ClockDisplayType>(
     (state) => state.settings.clockDisplay
   );
 
+  useEffect(() => {
+    listRef.current.scrollTo(0, listRef.current.scrollHeight);
+  }, [items, displayType]);
+
   return (
-    <List>
+    <List ref={listRef}>
       {items.map(({ isUserOwn, dateTime, text, userName, isImage }) => (
         <MessageContainer isUserOwn={isUserOwn} key={dateTime}>
           <MessageBlock>
