@@ -125,7 +125,7 @@ const Settings: FC = () => {
         />
       </Section>
       <Section>
-        <SectionTitle>Send message on Ctrl/Cmd + Enter</SectionTitle>
+        <SectionTitle>Send message on Ctrl + Enter</SectionTitle>
         <Label htmlFor="on">On</Label>
         <RadioInput
           type="radio"
