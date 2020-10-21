@@ -64,9 +64,13 @@ const SendMessageForm: FC = () => {
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
     sendMessage();
+    textInput.current.focus();
   };
 
   const sendMessage = () => {
+    if (!textInput.current.value.trim()) {
+      return;
+    }
     chatConnection.sendMessage({
       userName,
       text: textInput.current.value,

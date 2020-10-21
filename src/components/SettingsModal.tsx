@@ -54,7 +54,7 @@ const Settings: FC = () => {
 
   const dispatch = useDispatch();
 
-  const isElevenHoursDisplaySelected = useSelector<AppState, boolean>(
+  const isTwelveHoursDisplaySelected = useSelector<AppState, boolean>(
     (state) => state.settings.clockDisplay === ClockDisplayType.TWELVE_HOURS
   );
 
@@ -112,7 +112,7 @@ const Settings: FC = () => {
           name="clock-display"
           value={ClockDisplayType.TWELVE_HOURS}
           readOnly
-          checked={isElevenHoursDisplaySelected}
+          checked={isTwelveHoursDisplaySelected}
         />
         <Label htmlFor="24-hours">24 hours</Label>
         <RadioInput
@@ -121,7 +121,7 @@ const Settings: FC = () => {
           name="clock-display"
           value={ClockDisplayType.TWENTY_FOUR_HOURS}
           readOnly
-          checked={!isElevenHoursDisplaySelected}
+          checked={!isTwelveHoursDisplaySelected}
         />
       </Section>
       <Section>
