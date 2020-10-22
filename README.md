@@ -23,5 +23,5 @@ Then open second terminal
 [+-] send messages with Ctrl + ENTER toggle. Command + ENTER is not supported\
 [+] have a text/link to reset all the settings back to its defaults\
 ## Additional improvements
-[+] when app disconected an appropriate modal message appears
+[+] when app disconected an appropriate modal message appears\
 [+] autoscroll when new message received
