@@ -22,5 +22,5 @@ Then open second terminal
 [+] change clock display radio inputs\
 [+-] send messages with Ctrl + ENTER toggle. Command + ENTER is not supported\
 [+] have a text/link to reset all the settings back to its defaults\
-## Additionaly added
+## Additional improvements
 [+] when app disconected an appropriate modal message appears
