@@ -24,3 +24,4 @@ Then open second terminal
 [+] have a text/link to reset all the settings back to its defaults\
 ## Additional improvements
 [+] when app disconected an appropriate modal message appears
+[+] autoscroll when new message received
